@@ -1,8 +1,8 @@
-import {LIKES_COLLECTION, TWEET_COLLECTION} from "../firebase";
+import { LIKES_COLLECTION, TWEET_COLLECTION } from "../firebase";
 import store from "../store";
 import firebase from "firebase";
 
-export default async (tweet) => {
+export default async(tweet) => {
     try {
         // already liked
         if (tweet.isLiked) {
@@ -30,6 +30,6 @@ export default async (tweet) => {
             });
         }
     } catch (e) {
-        console.log("handle like error : ", e);
+        console.log("handle liked error : ", e);
     }
 };

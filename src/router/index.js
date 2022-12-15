@@ -1,20 +1,20 @@
-import {createWebHistory, createRouter} from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 import Home from "../pages/Home.vue";
 import Notifications from "../pages/Notifications.vue";
 import Messages from "../pages/Messages.vue";
 import Profile from "../pages/Profile.vue";
+import Tweet from '../pages/Tweet.vue'
 import Register from "../pages/Register.vue";
 import Login from "../pages/Login.vue";
 import store from "../store";
 
-const routes = [
-    {
+const routes = [{
         path: "/",
         component: Home,
         title: "홈",
         name: "home",
         icon: "fas fa-house fa-fw text-2xl",
-        meta: {isMenu: true, layout: "DefaultLayout", requireAuth: true},
+        meta: { isMenu: true, layout: "DefaultLayout", requireAuth: true },
     },
     {
         path: "/",
@@ -22,7 +22,7 @@ const routes = [
         title: "탐색하기",
         name: "explore",
         icon: "fas fa-hashtag fa-fw text-2xl",
-        meta: {isMenu: true, layout: "DefaultLayout", requireAuth: true},
+        meta: { isMenu: true, layout: "DefaultLayout", requireAuth: true },
     },
     {
         path: "/notifications",
@@ -30,7 +30,7 @@ const routes = [
         title: "알림",
         name: "notifications",
         icon: "far fa-bell fa-fw text-2xl",
-        meta: {isMenu: true, layout: "DefaultLayout", requireAuth: true},
+        meta: { isMenu: true, layout: "DefaultLayout", requireAuth: true },
     },
     {
         path: "/messages",
@@ -38,7 +38,7 @@ const routes = [
         title: "쪽지",
         name: "messages",
         icon: "far fa-envelope fa-fw text-2xl",
-        meta: {isMenu: true, layout: "DefaultLayout", requireAuth: true},
+        meta: { isMenu: true, layout: "DefaultLayout", requireAuth: true },
     },
     {
         path: "/",
@@ -46,7 +46,7 @@ const routes = [
         title: "북마크",
         name: "bookmarks",
         icon: "far fa-bookmark fa-fw text-2xl",
-        meta: {isMenu: true, layout: "DefaultLayout", requireAuth: true},
+        meta: { isMenu: true, layout: "DefaultLayout", requireAuth: true },
     },
     {
         path: "/",
@@ -54,7 +54,7 @@ const routes = [
         title: "리스트",
         name: "list",
         icon: "far fa-list-alt fa-fw text-2xl",
-        meta: {isMenu: true, layout: "DefaultLayout", requireAuth: true},
+        meta: { isMenu: true, layout: "DefaultLayout", requireAuth: true },
     },
     {
         path: "/profile",
@@ -62,7 +62,7 @@ const routes = [
         title: "프로필",
         name: "profile",
         icon: "far fa-user fa-fw text-2xl",
-        meta: {isMenu: true, layout: "DefaultLayout", requireAuth: true},
+        meta: { isMenu: true, layout: "DefaultLayout", requireAuth: true },
     },
     {
         path: "/",
@@ -70,19 +70,25 @@ const routes = [
         title: "더보기",
         name: "more",
         icon: "fas fa-ellipsis-h fa-fw text-2xl",
-        meta: {isMenu: true, layout: "DefaultLayout", requireAuth: true},
+        meta: { isMenu: true, layout: "DefaultLayout", requireAuth: true },
+    },
+    {
+        path: "/tweet/:id",
+        component: Tweet,
+        name: "tweet",
+        meta: { isMenu: false, layout: "DefaultLayout", requireAuth: true },
     },
     {
         path: "/login",
         component: Login,
         name: "login",
-        meta: {isMenu: false, layout: "EmptyLayout"},
+        meta: { isMenu: false, layout: "EmptyLayout" },
     },
     {
         path: "/register",
         component: Register,
         name: "register",
-        meta: {isMenu: false, layout: "EmptyLayout"},
+        meta: { isMenu: false, layout: "EmptyLayout" },
     },
 ];
 
