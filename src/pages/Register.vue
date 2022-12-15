@@ -1,0 +1,85 @@
+<template>
+    <div class="flex flex-col items-center space-y-4 mt-10">
+        <i :class="`fab fa-twitter text-4xl text-primary ${loading ? 'animate-bounce' : ''}`"></i>
+        <span class="text-2xl font-bold">뜨위떠 회원가입</span>
+        <input v-model="userName" type="text" class="w-96 px-4 py-3 rounded border border-gray-300 focus:ring-2 focus:border-primary focus:outline-none" placeholder="아이디" />
+        <input v-model="email" type="text" class="w-96 px-4 py-3 rounded border border-gray-300 focus:ring-2 focus:border-primary focus:outline-none" placeholder="이메일" />
+        <input v-model="password"  @keyup.enter="onRegister" type="password" class="w-96 px-4 py-3 rounded border border-gray-300 focus:ring-2 focus:border-primary focus:outline-none" placeholder="비밀번호" />
+        <button v-if="loading" class="w-96 rounded-full bg-light text-white py-3">회원가입 중입니다.</button>
+        <button v-else class="w-96 rounded-full bg-primary text-white py-3 hover:bg-dark" @click="onRegister">회원가입</button>
+        <router-link to="/login">
+            <button class="text-primary">계정이 이미 있으신가요? 로그인 하기</button>
+        </router-link>
+    </div>
+</template>
+
+<script>
+import {ref} from 'vue'
+import {auth, USER_COLLECTION} from '../firebase'
+import {useRouter} from 'vue-router'
+
+export default {
+    name: 'TwitterCloneRegister',
+
+    setup() {
+        const userName = ref('')
+        const email = ref('')
+        const password = ref('')
+        const loading = ref(false)
+        const router = useRouter()
+
+        console.log(loading.value);
+
+        const onRegister = async () => {
+            if (!userName.value || !email.value || !password.value) {
+                alert("사용자 이름, 이메일, 비밀번호를 모두 입력해 주세요.");
+                return;
+            }
+
+            try{
+                loading.value = true;
+                const {user} = await auth.createUserWithEmailAndPassword(email.value, password.value)
+                const doc = USER_COLLECTION.doc(user.uid)
+
+                await doc.set({
+                    uid: user.uid,
+                    userName: userName.value,
+                    email: email.value,
+                    profile_image_url: '/profile.png',
+                    num_tweets: 0,
+                    followers: [],
+                    followings: [],
+                    created_at: Date.now(),
+                })
+
+                alert("회원 가입에 성공하셨습니다. 로그인 해주세요.")
+                router.push("/login")
+            } catch (e) {
+                switch (e.code) {
+                    case 'auth/invalid-email':
+                        alert("이메일을 바르게 입력해주세요.")
+                        break;
+                    case 'auth/week-password':
+                        alert("비밀번호를 6자리 이상 입력해주세요.")
+                        break;
+                    case 'auth/email-already-in-use':
+                        alert("이미 가입되어 있는 이메일입니다.")
+                        break;
+                    default:
+                        alert("회원가입 실패");
+                }
+            } finally {
+                loading.value = false;
+            }
+        }
+
+        return {
+            userName, email, password, loading, onRegister
+        }
+    },
+};
+</script>
+
+<style lang="scss" scoped>
+
+</style>
