@@ -31,7 +31,7 @@ import Tweet from '../components/Tweet.vue'
 import Trends from '../components/Trends.vue'
 import { ref, computed, onBeforeMount } from 'vue'
 import store from '../store'
-import { TWEET_COLLECTION, USER_COLLECTION } from '../firebase'
+import { TWEET_COLLECTION } from '../firebase'
 import addTweet from '../utils/addTweet'
 import getTweetInfo from '../utils/getTweetInfo'
 
